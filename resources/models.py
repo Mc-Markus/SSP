@@ -9,6 +9,13 @@ class Coach(Base):
                       Column('workplace', String(50)),
                       )
 
+class coach(Base):
+    __table__ = Table('coach', Base.metadata,
+                      Column('id', Integer, ForeignKey('auth_user.id'), primary_key=True),
+                      Column('workplace', String(50)),
+                      Column('phone', String(13)),
+                      Column('date_of_birth', String(50)),
+                      )
 
 class User(Base):
     __table__ = Table('auth_user', Base.metadata,
