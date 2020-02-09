@@ -49,11 +49,11 @@ def get_coach(req):
 
 # Controller for the GET request, either returns a list with coach(es) or an error
 def post_coach(req):
-    # try:
-    return func.HttpResponse(json.dumps(prepare_data(sc.post_coach_logic(req), [['User'], ['coach']]), indent=4, sort_keys=True, default=str),
+    try:
+        return func.HttpResponse(json.dumps(prepare_data(sc.post_coach_logic(req), [['User'], ['coach']]), indent=4, sort_keys=True, default=str),
                                  mimetype='JSON', status_code=200)
-    # except:
-    #     return func.HttpResponse(f"This call needs valid user data to post or the user already exists", mimetype='text/plain', status_code=412)
+    except:
+        return func.HttpResponse(f"This call needs valid user data to post or the user already exists", mimetype='text/plain', status_code=412)
 
 
 # Controller for the GET request, either returns succes or an error

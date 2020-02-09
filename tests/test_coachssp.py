@@ -2,7 +2,7 @@ import requests
 import json
 from nose.tools import assert_true, assert_false
 
-from resources import models as m
+from ..resources import models as m
 
 # Standard library imports...
 try:
@@ -11,7 +11,7 @@ except ImportError:
     from urlparse import urljoin
 
 # Local imports...
-from constants import BASE_URL_LOCAL as BASE_URL
+from constants import BASE_URL_LOCAL
 
 header = {''}
 PATH_VARIABLE = 'coachesssp'
@@ -43,8 +43,8 @@ def test_get_numberof_coaches():
     assert_true(response.ok)
     check_response(response)
 
-def test_get_whereworkplace_coaches():
-    param = {'workplace': 'Haarlem'}
+def test_get_where_workplace_coaches():
+    param = {'workplace': 'haarlem'}
     response = requests.get(urljoin(BASE_URL, PATH_VARIABLE), headers=header, params=param)
     assert_true(response.ok)
     check_response(response)
@@ -55,7 +55,7 @@ def check_response(response):
         coach_json = response.json()
         for coach_inner in coach_json:
             user = m.User(**{k: coach_inner[0][k] for k in ('date_joined', 'email', 'first_name', 'id', 'is_active', 'is_staff', 'is_superuser', 'last_login', 'last_name', 'username') if k in coach_inner[0]})
-            coach = m.coach(**{k: coach_inner[1][k] for k in ('id', 'workplace', 'phone', 'date_of_birth') if k in coach_inner[1]})
+            coach = m.Coach(**{k: coach_inner[1][k] for k in ('id', 'workplace', 'phone', 'date_of_birth') if k in coach_inner[1]})
             assert_true(user.id >= 0)
             assert_true(coach.id >= 0)
 
@@ -82,7 +82,9 @@ def test_post_coach():
 
 
 def test_put_coach():
-    param = {'workplace': 'Amsterdam', 'phone': '+31600000001', 'date_of_birth': '25-10-1997'}
+    param = {'workplace': 'Amsterdam'}
+    param = {'phone': '+31600000001'}
+    param = {'date_of_birth': '25-10-1997'}
     response = requests.put(urljoin(BASE_URL, PATH_VARIABLE), headers=header, params=param)
     assert_true(response.ok)
     if response:
@@ -90,7 +92,7 @@ def test_put_coach():
         coach_inner = coach_json[0]
         assert_true(coach_inner[1]['id'] > 0)
         assert_true(coach_inner[1]['workplace'] == 'Amsterdam')
-        assert_true(coach_inner[1]['phone'] == '+31600000001')
+        ssert_true(coach_inner[1]['phone'] == '+31600000001')
         assert_true(coach_inner[1]['date_of_birth'] == '25-10-1997')
 
 
