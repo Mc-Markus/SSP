@@ -41,7 +41,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 # Controller for the GET request, either returns a list with coach(es) or an error
 def get_coach(req):
     try:
-        return func.HttpResponse(json.dumps(prepare_data(sc.get_coach_logic(req), [['User'], ['Coach']]), indent=4, sort_keys=True, default=str),
+        return func.HttpResponse(json.dumps(prepare_data(sc.get_coach_logic(req), [['User'], ['coach']]), indent=4, sort_keys=True, default=str),
                                 mimetype='JSON', status_code=200)
     except:
        return func.HttpResponse(f"Coach doesn't exist or parameter incorrect", mimetype='text/plain', status_code=412)
@@ -49,11 +49,11 @@ def get_coach(req):
 
 # Controller for the GET request, either returns a list with coach(es) or an error
 def post_coach(req):
-    try:
-        return func.HttpResponse(json.dumps(prepare_data(sc.post_coach_logic(req), [['User'], ['Coach']]), indent=4, sort_keys=True, default=str),
+    # try:
+    return func.HttpResponse(json.dumps(prepare_data(sc.post_coach_logic(req), [['User'], ['coach']]), indent=4, sort_keys=True, default=str),
                                  mimetype='JSON', status_code=200)
-    except:
-        return func.HttpResponse(f"This call needs valid user data to post or the user already exists", mimetype='text/plain', status_code=412)
+    # except:
+    #     return func.HttpResponse(f"This call needs valid user data to post or the user already exists", mimetype='text/plain', status_code=412)
 
 
 # Controller for the GET request, either returns succes or an error
@@ -69,7 +69,7 @@ def delete_coach(req):
 # Controller for the GET request, either returns a list with a coach or an error
 def put_coach(req):
     try:
-        return func.HttpResponse(json.dumps(prepare_data(sc.put_coach_logic(req), [['User'], ['Coach']]), indent=4, sort_keys=True, default=str),
+        return func.HttpResponse(json.dumps(prepare_data(sc.put_coach_logic(req), [['User'], ['coach']]), indent=4, sort_keys=True, default=str),
                                     mimetype='JSON', status_code=200)
     except:
         return func.HttpResponse(f"Failed to update this coach, or invalid parameters",

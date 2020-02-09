@@ -38,11 +38,11 @@ def post_coach_logic(req):
     token = req.headers.get("Authorization")
     workplace = get_param(req, 'workplace', 'string')
     phone = get_param(req, 'phone', 'string')
-    dob = get_param(req, 'dob', 'string')
+    date_of_birth = get_param(req, 'date_of_birth', 'string')
 
     id = get_user_id_by_token(token)
 
-    db.create_coach(id, workplace, phone, dob)
+    db.create_coach(id, workplace, phone, date_of_birth)
     data = db.get_coach(id)
     return data
 
@@ -62,9 +62,9 @@ def put_coach_logic(req):
     id = get_user_id_by_token(token)
     workplace = get_param(req, 'workplace', 'string')
     phone = get_param(req, 'phone', 'string')
-    dob = get_param(req, 'dob', 'string')
+    date_of_birth = get_param(req, 'date_of_birth', 'string')
 
-    db.update_coach(id, workplace, phone, dob)
+    db.update_coach(id, workplace, phone, date_of_birth)
     data = db.get_coach(id)
     return data
 

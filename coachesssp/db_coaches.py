@@ -51,7 +51,7 @@ def get_workplace_coaches(workplace_filter):
     session = request_session()
     query = session.query(Coach, User)
     query = query.filter(Coach.id == User.id)
-    query = query.filter(Coach.workplace == workplace)
+    query = query.filter(Coach.workplace == workplace_filter)
     query = query.options(defer(User.password))
 
     result = query.all()
@@ -81,9 +81,9 @@ def remove_coach(id):
     session.close()
 
 # Create coach in db
-def create_coach(user_id, workplace, phone, dob):
+def create_coach(user_id, workplace, phone, date_of_birth):
     session = request_session()
-    coach = Coach(id=user_id, workplace=workplace, phone=phone, date_of_birth=dob)
+    coach = Coach(id=user_id, workplace=workplace, phone=phone, date_of_birth=date_of_birth)
     session.add(coach)
     session.commit()
     session.close()
